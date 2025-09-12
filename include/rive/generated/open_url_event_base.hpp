@@ -1,6 +1,7 @@
 #ifndef _RIVE_OPEN_URL_EVENT_BASE_HPP_
 #define _RIVE_OPEN_URL_EVENT_BASE_HPP_
 #include <string>
+#include <cassert>
 #include "rive/core/field_types/core_string_type.hpp"
 #include "rive/core/field_types/core_uint_type.hpp"
 #include "rive/event.hpp"
@@ -44,30 +45,23 @@ public:
     inline const std::string& url() const { return m_Url; }
     void url(std::string value)
     {
-        if (m_Url == value)
-        {
-            return;
-        }
-        m_Url = value;
-        urlChanged();
+        // Harden: forbid setting URL
+        assert(false && "Setting OpenUrlEvent.url is disabled");
+        (void)value;
     }
 
     inline uint32_t targetValue() const { return m_TargetValue; }
     void targetValue(uint32_t value)
     {
-        if (m_TargetValue == value)
-        {
-            return;
-        }
-        m_TargetValue = value;
-        targetValueChanged();
+        // Harden: forbid setting target
+        assert(false && "Setting OpenUrlEvent.targetValue is disabled");
+        (void)value;
     }
 
     Core* clone() const override;
     void copy(const OpenUrlEventBase& object)
     {
-        m_Url = object.m_Url;
-        m_TargetValue = object.m_TargetValue;
+        // Keep hardened defaults; do not copy URL/target.
         Event::copy(object);
     }
 
@@ -76,10 +70,14 @@ public:
         switch (propertyKey)
         {
             case urlPropertyKey:
-                m_Url = CoreStringType::deserialize(reader);
+                // Harden: assert but consume to keep stream aligned
+                assert(false && "Deserializing OpenUrlEvent.url is disabled");
+                (void)CoreStringType::deserialize(reader);
                 return true;
             case targetValuePropertyKey:
-                m_TargetValue = CoreUintType::deserialize(reader);
+                // Harden: assert but consume to keep stream aligned
+                assert(false && "Deserializing OpenUrlEvent.targetValue is disabled");
+                (void)CoreUintType::deserialize(reader);
                 return true;
         }
         return Event::deserialize(propertyKey, reader);
