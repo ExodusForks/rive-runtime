@@ -1,6 +1,7 @@
 #ifndef _RIVE_FILE_ASSET_BASE_HPP_
 #define _RIVE_FILE_ASSET_BASE_HPP_
 #include <string>
+#include <cassert>
 #include "rive/assets/asset.hpp"
 #include "rive/core/field_types/core_bytes_type.hpp"
 #include "rive/core/field_types/core_string_type.hpp"
@@ -38,7 +39,7 @@ public:
 
 protected:
     uint32_t m_AssetId = 0;
-    std::string m_CdnBaseUrl = "https://public.rive.app/cdn/uuid";
+    std::string m_CdnBaseUrl = "";
 
 public:
     inline uint32_t assetId() const { return m_AssetId; }
@@ -58,19 +59,14 @@ public:
     inline const std::string& cdnBaseUrl() const { return m_CdnBaseUrl; }
     void cdnBaseUrl(std::string value)
     {
-        if (m_CdnBaseUrl == value)
-        {
-            return;
-        }
-        m_CdnBaseUrl = value;
-        cdnBaseUrlChanged();
+        assert(false && "cdnBaseUrl(value) is disabled.");
     }
 
     void copy(const FileAssetBase& object)
     {
         m_AssetId = object.m_AssetId;
         copyCdnUuid(object);
-        m_CdnBaseUrl = object.m_CdnBaseUrl;
+        assert(false && "Copying cdnBaseUrl is disabled.");
         Asset::copy(object);
     }
 
@@ -85,7 +81,8 @@ public:
                 decodeCdnUuid(CoreBytesType::deserialize(reader));
                 return true;
             case cdnBaseUrlPropertyKey:
-                m_CdnBaseUrl = CoreStringType::deserialize(reader);
+                assert(false && "Deserializing cdnBaseUrl is disabled.");
+                (void)CoreStringType::deserialize(reader);
                 return true;
         }
         return Asset::deserialize(propertyKey, reader);
