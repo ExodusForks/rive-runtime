@@ -47,6 +47,13 @@ filter('system:windows')
 do
     staticruntime('on') -- Match Skia's /MT flag for link compatibility
     runtime('Release') -- Use /MT even in debug (/MTd is incompatible with Skia)
+    -- Prefer safer defaults on Windows when linking with MSVC toolchain; clang-cl honors many of these.
+    filter({ 'system:windows', 'options:config=release' })
+    do
+        linkoptions({ '/guard:cf', '/DYNAMICBASE', '/NXCOMPAT' })
+        buildoptions({ '/sdl' })
+    end
+    filter({})
 end
 
 filter({ 'system:windows', 'options:toolset=clang' })
