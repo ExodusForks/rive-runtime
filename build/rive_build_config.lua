@@ -200,6 +200,9 @@ do
     defines({ 'RELEASE' })
     defines({ 'NDEBUG' })
     optimize('On')
+    -- Enable lightweight runtime fortification where supported.
+    -- On glibc systems this enables additional bounds checks in optimized builds.
+    defines({ '_FORTIFY_SOURCE=3' })
 end
 
 filter({ 'options:config=release', 'options:not no-lto', 'system:not macosx', 'system:not ios' })
@@ -340,7 +343,9 @@ do
         '-Wno-missing-field-initializers',
         '-Wno-unsafe-buffer-usage',
     })
-end
+    -- /sdl adds additional security checks for MSVC CRT; clang-cl forwards to link where possible.
+    buildoptions({ '/sdl' })
+ end
 
 filter({ 'system:windows', 'options:toolset=msc' })
 do
@@ -395,6 +400,16 @@ do
         '5264', -- 'rive::math::PI': 'const' variable is not used
         '4647', -- behavior change: __is_pod(rive::Vec2D) has different value in previous versions
     })
+    -- Turn on additional security flags for release artifacts.
+    filter({ 'system:windows', 'options:toolset=msc', 'options:config=release' })
+    do
+        -- Enable Control Flow Guard and strong ASLR/NX hints.
+        linkoptions({ '/guard:cf', '/DYNAMICBASE', '/NXCOMPAT' })
+        -- Additional secure CRT checks
+        buildoptions({ '/sdl' })
+    end
+    filter({})
+
 end
 
 filter({ 'action:vs2022' })
@@ -527,9 +542,38 @@ if _OPTIONS['for_android'] then
         '-Wl,--no-rosegment',
         '-Wl,--no-undefined',
         '-static-libstdc++',
+        -- Extra Android/ELF hardening
+        '-Wl,-z,relro',
+        '-Wl,-z,now',
+        '-Wl,-z,noexecstack'
     })
 
     filter({})
+end
+
+filter({ 'system:linux', 'options:config=release' })
+do
+    buildoptions({
+        '-fstack-protector-strong',
+        '-fstack-clash-protection',
+    })
+    -- Note: -fPIE/-pie are best for executables; many Rive targets are libs.
+    -- If/when producing executables here, consider adding -fPIE and -pie.
+    linkoptions({
+        '-Wl,-z,relro',
+        '-Wl,-z,now',
+        '-Wl,-z,noexecstack',
+        '-Wl,--as-needed',
+    })
+    defines({ '_GLIBCXX_ASSERTIONS' }) -- Safe libstdc++ bounds checks (no-op on libc++).
+end
+
+
+
+filter('system:linux')
+do
+    -- Always prefer non-executable stacks where toolchain honors it.
+    linkoptions({ '-Wl,-z,noexecstack' })
 end
 
 filter('system:linux', 'options:arch=x64')
@@ -655,6 +699,15 @@ if os.host() == 'macosx' then
         buildoptions({ '-fobjc-arc' })
     end
 
+    -- Add stack canaries and initialize large stack frames defensively in Release.
+    filter({ 'system:macosx or system:ios', 'options:config=release' })
+    do
+        buildoptions({
+            '-fstack-protector-strong',
+        })
+    -- Hardened runtime requires codesigning; left to app packaging stage.
+    end
+
     filter({ 'system:macosx', 'options:not variant=maccatalyst' })
     do
         buildoptions({
@@ -769,7 +822,11 @@ if _OPTIONS['arch'] == 'wasm' or _OPTIONS['arch'] == 'js' then
     system('emscripten')
     toolset('emsdk')
 
-    linkoptions({ '-sALLOW_MEMORY_GROWTH=1', '-sDYNAMIC_EXECUTION=0' })
+    linkoptions({
+        '-sALLOW_MEMORY_GROWTH=1',
+        '-sDYNAMIC_EXECUTION=0',   -- No eval/Function(…) at runtime
+        '-sSTACK_OVERFLOW_CHECK=2' -- Trap on stack overflows
+    })
 
     filter('options:arch=wasm')
     do
@@ -797,6 +854,13 @@ if _OPTIONS['arch'] == 'wasm' or _OPTIONS['arch'] == 'js' then
             '-g2',
         })
     end
+
+    filter({ 'options:arch=wasm', 'options:config=release' })
+    do
+        -- Minimal demangle info; keep binary lean/harder to ROP via symbol clues.
+        linkoptions({ '-sDEMANGLE_SUPPORT=0' })
+    end
+
 
     filter('options:arch=js')
     do
