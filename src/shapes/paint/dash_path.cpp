@@ -67,15 +67,20 @@ ShapePaintPath* PathDasher::applyDash(const RawPath* source,
             float dashed = 0.0f;
             float distance = offset->normalizedLength(contour->length());
             bool draw = true;
-            if (dashLength <= 0.0f)
-            {
-                dashIndex++;
-                continue;
-            }
             while (dashed < contour->length())
             {
                 const Dash* dash = dashes[dashIndex++ % dashes.size()];
                 float dashLength = dash->normalizedLength(contour->length());
+                if (dashLength <= 0.0f)
+                {
+                    dashIndex++;
+                    continue;
+                }
+                if (dashLength <= 0.0f)
+                {
+                    dashIndex++;
+                    continue;
+                }
                 if (dashLength > contour->length())
                 {
                     dashLength = contour->length();
