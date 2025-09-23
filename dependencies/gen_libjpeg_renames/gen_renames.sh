@@ -12,6 +12,7 @@ if [[ ! -f "dependencies/bin/premake5" ]]; then
     # once a stable one is avaialble that supports it
     git clone --depth 1 --branch v5.0.0-beta3 https://github.com/premake/premake-core.git
     pushd premake-core
+    git checkout eb5238f1573274c3dd62b36dc8082edad1cabe12 || exit 1
     if [[ $LOCAL_ARCH == "arm64" ]]; then
         PREMAKE_MAKE_ARCH=ARM
     else

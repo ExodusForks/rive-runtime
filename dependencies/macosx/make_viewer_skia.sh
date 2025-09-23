@@ -13,6 +13,7 @@ if [ ! -d skia ]; then
     git clone https://github.com/google/skia skia
     cd skia
     git checkout chrome/m99
+    git checkout 750673c775648c29002389a3f56fba459288eea9 || exit 1
 else
     cd skia
 fi

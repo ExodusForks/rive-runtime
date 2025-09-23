@@ -77,6 +77,9 @@ getSkia () {
 
     echo "Checking out branch $SKIA_BRANCH"
     git checkout $SKIA_BRANCH
+    cd $SKIA_BRANCH
+    git checkout 355e333200d874be47b2edb80c1c3be166c3c046 || exit 1
+    cd ../
     # Remove piet-gpu from dependencies because repository does not exist anymore
     sed -i.bak -r 's/.*piet.*//g' "$PWD/DEPS"
 

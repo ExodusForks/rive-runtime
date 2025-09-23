@@ -12,9 +12,11 @@ GLFW_REPO=https://github.com/glfw/glfw
 if [ ! -d glfw ]; then
     echo "Cloning GLFW."
     git clone $GLFW_REPO
+    git checkout 8e15281d34a8b9ee9271ccce38177a3d812456f8 || exit 1
 else
     echo "Already have GLFW, update it."
     cd glfw && git fetch && git merge master
+    git checkout 8e15281d34a8b9ee9271ccce38177a3d812456f8 || exit 1
     cd ..
 fi
 

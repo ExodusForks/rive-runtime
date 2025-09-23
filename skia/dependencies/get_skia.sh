@@ -36,6 +36,12 @@ if [ $# -eq 0 ]; then
   # No arguments supplied; checkout the default skia repos.
   getSkia https://github.com/rive-app/skia rive skia_rive_optimized
   getSkia https://github.com/google/skia chrome/m99 skia
+  cd skia
+  git checkout 750673c775648c29002389a3f56fba459288eea9 || exit 1
+  cd ../
+  cd skia_rive_optimized
+  git 355e333200d874be47b2edb80c1c3be166c3c046 || exit 1
+  cd ../
 else
   # The caller specified which skia repo to checkout.
   getSkia $@

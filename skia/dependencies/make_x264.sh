@@ -19,6 +19,7 @@ else
 fi
 
 cd x264
+git checkout c24e06c2e184345ceb33eb20a15d1024d9fd3497 || exit 1
 
 ./configure --enable-static --enable-pic --prefix=.
 make;make install
