@@ -1,6 +1,6 @@
 require('setup_compiler')
 local dependency = require('dependency')
-libpng = dependency.github('pnggroup/libpng', 'libpng16')
+libpng = dependency.github('pnggroup/libpng', '99230a0368ccd1f31e974b9dd8cd8bcebaa30d00')
 zlib = dependency.github('madler/zlib', '04f42ceca40f73e2978b50e93806c2a18c1281fc')
 
 includedirs({ './' })

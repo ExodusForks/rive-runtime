@@ -142,7 +142,7 @@ newoption({ trigger = 'with_optick', description = 'use optick profiler' })
 if _OPTIONS['with_optick'] then
     defines({ 'RIVE_OPTICK' })
     RIVE_OPTICK_URL = 'bombomby/optick'
-    RIVE_OPTICK_VERSION = '1.4.0.0'
+    RIVE_OPTICK_VERSION = 'eb392f1647b1bb7c77f6a44e28641eaa29e37253'
 end 
 
 location(RIVE_BUILD_OUT)

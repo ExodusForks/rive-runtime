@@ -1,7 +1,7 @@
 dofile('rive_build_config.lua')
 
 local dependency = require('dependency')
-sheenbidi = dependency.github('Tehreer/SheenBidi', 'v2.6')
+sheenbidi = dependency.github('Tehreer/SheenBidi', 'adfccc46504b1be37b8894f064121c56c31312f7')
 Headers = sheenbidi .. '/Headers'
 
 project('rive_sheenbidi')

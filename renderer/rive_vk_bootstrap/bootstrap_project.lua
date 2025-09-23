@@ -8,7 +8,7 @@ if not vulkan_headers or not vulkan_memory_allocator then
 end
 
 local dependency = require('dependency')
-vk_bootstrap = dependency.github('charles-lunarg/vk-bootstrap', 'v1.4.307')
+vk_bootstrap = dependency.github('charles-lunarg/vk-bootstrap', '1dc33a90a888dff0ba2bf6398164d301b52f264a')
 
 includedirs({ 'include' })
 

@@ -1,7 +1,7 @@
 dofile('rive_build_config.lua')
 
 local dependency = require('dependency')
-libwebp = dependency.github('webmproject/libwebp', 'v1.4.0')
+libwebp = dependency.github('webmproject/libwebp', '845d5476a866141ba35ac133f856fa62f0b7445f')
 
 project('libwebp')
 do

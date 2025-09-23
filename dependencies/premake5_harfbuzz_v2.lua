@@ -1,7 +1,7 @@
 dofile('rive_build_config.lua')
 
 local dependency = require('dependency')
-harfbuzz = dependency.github('rive-app/harfbuzz', 'rive_10.1.0')
+harfbuzz = dependency.github('rive-app/harfbuzz', '98df6ee319913467c2778a7a969d77542e9c0a84')
 
 newoption({
     trigger = 'no-harfbuzz-renames',

@@ -1,5 +1,5 @@
 local dependency = require('dependency')
-yoga = dependency.github('rive-app/yoga', 'rive_changes_v2_0_1_2')
+yoga = dependency.github('rive-app/yoga', 'b827168e5e66c56b3117660a12607fe4f54ea33c')
 
 workspace('rive')
 configurations({ 'debug', 'release' })
