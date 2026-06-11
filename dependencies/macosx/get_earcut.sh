@@ -18,6 +18,7 @@ fi
 
 pushd earcut.hpp
 git checkout $EARCUT_STABLE_BRANCH && git fetch && git pull
+git checkout f36ced7e50254738c4e5af1a239f5fb7b1094007 || exit 1
 popd
 
 popd

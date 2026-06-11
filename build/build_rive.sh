@@ -232,6 +232,7 @@ if [ ! -f "$PREMAKE_INSTALL_DIR/premake5" ]; then
     rm -fr premake-core # Wipe out a prior checkout if it exists without a premake5 binary.
     git clone --depth 1 --branch $RIVE_PREMAKE_TAG https://github.com/premake/premake-core.git
     pushd premake-core > /dev/null
+    git checkout ba2c383c0456aa75d1b93faf62f4aec2691f23b2 || exit 1
     case "$HOST_MACHINE" in
         mac_arm64) make -f Bootstrap.mak osx PLATFORM=ARM ;;
         mac_x64) make -f Bootstrap.mak osx ;;
@@ -250,6 +251,7 @@ export PREMAKE_PATH="$SCRIPT_DIR"
 if [[ $RIVE_BUILD_SYSTEM = "ninja" ]]; then
     if [ ! -d premake-ninja ]; then
         git clone --branch rive_modifications https://github.com/rive-app/premake-ninja.git
+        git checkout 4bf4ad8ec16b8233b66139953e360cc9f3ffb944 || exit 1
     fi
     export PREMAKE_PATH="$SCRIPT_DIR/dependencies/premake-ninja:$PREMAKE_PATH"
 fi
@@ -258,6 +260,7 @@ fi
 if [[ $RIVE_BUILD_SYSTEM = "export-compile-commands" ]]; then
     if [ ! -d premake-export-compile-commands ]; then
         git clone --branch more_cpp_support https://github.com/rive-app/premake-export-compile-commands.git
+        git checkout d61850f0b46eeba68ce48f8451d4c9399446ba77 || exit 1
     fi
     export PREMAKE_PATH="$SCRIPT_DIR/dependencies/premake-export-compile-commands:$PREMAKE_PATH"
 fi
@@ -271,6 +274,7 @@ if [[ $RIVE_ARCH = "wasm" ]] || [[ $RIVE_ARCH = "js" ]]; then
         if [ ! -d "emsdk_${RIVE_EMSDK_VERSION}" ]; then
             echo Installing emsdk ${RIVE_EMSDK_VERSION}...
             git clone https://github.com/emscripten-core/emsdk.git emsdk_${RIVE_EMSDK_VERSION}
+            git checkout 389a68bc35dcff7ebae4614e1615099dafda00d1 || exit 1
             "emsdk_${RIVE_EMSDK_VERSION}/emsdk" install ${RIVE_EMSDK_VERSION}
             "emsdk_${RIVE_EMSDK_VERSION}/emsdk" activate ${RIVE_EMSDK_VERSION}
         fi

@@ -16,3 +16,4 @@ if [ ! -d imgui ]; then
 fi
 
 cd imgui && git checkout $IMGUI_STABLE_BRANCH && git fetch && git pull
+git checkout d701ffb4780467ca3a40e63ee7774346b9b61758 || exit 1

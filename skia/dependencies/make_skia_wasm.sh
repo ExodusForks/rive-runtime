@@ -17,6 +17,9 @@ fi
 
 cd skia_rive_optimized
 
+git 355e333200d874be47b2edb80c1c3be166c3c046 || exit 1
+
+
 # build static for host
 bin/gn gen out/wasm --type=static_library --args=" \
     cc=\"emcc\" \

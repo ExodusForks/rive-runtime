@@ -13,6 +13,7 @@ if [ ! -d gl3w ]; then
 fi
 
 cd gl3w && git checkout $GL3W_STABLE_BRANCH && git fetch && git pull
+git checkout 97a85e153d7f43c8d2de8b776a33721e238ddb96 || exit 1
 
 mkdir -p build
 cd build
