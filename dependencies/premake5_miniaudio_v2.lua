@@ -1,6 +1,6 @@
 dofile('rive_build_config.lua')
 local dependency = require('dependency')
-miniaudio = dependency.github('rive-app/miniaudio', 'rive_changes_5')
+miniaudio = dependency.github('rive-app/miniaudio', '3a8b070f80e203a35ec763c5118da20805a90d5a')
 
 project('miniaudio')
 do

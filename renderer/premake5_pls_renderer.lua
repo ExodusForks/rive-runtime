@@ -11,9 +11,9 @@ newoption({
 -- for Vulkan.
 if _OPTIONS['with_vulkan'] then
     -- Standardize on the same set of Vulkan headers on all platforms.
-    vulkan_headers = dependency.github('KhronosGroup/Vulkan-Headers', 'vulkan-sdk-1.4.321')
+    vulkan_headers = dependency.github('KhronosGroup/Vulkan-Headers', '2cd90f9d20df57eac214c148f3aed885372ddcfe')
     vulkan_memory_allocator =
-        dependency.github('GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator', 'v3.3.0')
+        dependency.github('GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator', '1d8f600fd424278486eade7ed3e877c99f0846b1')
     defines({
         'RIVE_VULKAN',
         'VK_NO_PROTOTYPES',
@@ -23,7 +23,7 @@ if _OPTIONS['with_vulkan'] then
 end
 
 if _TARGET_OS == 'windows' then
-    dx12_headers = dependency.github('microsoft/DirectX-Headers', 'v1.615.0')
+    dx12_headers = dependency.github('microsoft/DirectX-Headers', '27d63115c1037d0e4e119085f34345bd9ecf7ada')
 end
 
 filter('system:windows or macosx or linux')
@@ -104,7 +104,7 @@ else
     handle:close()
 end
 nproc = nproc:gsub('%s+', '') -- remove whitespace
-local python_ply = dependency.github('dabeaz/ply', '3.11')
+local python_ply = dependency.github('dabeaz/ply', '0f398b72618c1564d71f7dc0558e6722b241875a')
 local makecommand = 'make -C '
     .. path.getabsolute('src/shaders')
     .. ' -j'

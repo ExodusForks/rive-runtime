@@ -1,8 +1,8 @@
 dofile('rive_build_config.lua')
 
 local dependency = require('dependency')
-libpng = dependency.github('pnggroup/libpng', 'libpng16')
-zlib = dependency.github('madler/zlib', 'v1.3.1')
+libpng = dependency.github('pnggroup/libpng', '99230a0368ccd1f31e974b9dd8cd8bcebaa30d00')
+zlib = dependency.github('madler/zlib', '51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf')
 
 includedirs({ './' })
 forceincludes({ 'rive_png_renames.h' })

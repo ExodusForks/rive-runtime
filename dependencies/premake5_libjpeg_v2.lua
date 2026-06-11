@@ -1,7 +1,7 @@
 dofile('rive_build_config.lua')
 
 local dependency = require('dependency')
-libjpeg = dependency.github('rive-app/libjpeg', 'v9f')
+libjpeg = dependency.github('rive-app/libjpeg', '2f995b502f6ea31cb130d93b5661bf468c114e19')
 
 newoption({
     trigger = 'no-libjpeg-renames',

@@ -1,9 +1,9 @@
 dofile('rive_build_config.lua')
 
 local dependency = require('dependency')
-sokol = dependency.github('luigi-rosso/sokol', 'support_transparent_framebuffer')
-libtess2 = dependency.github('memononen/libtess2', 'master')
-earcut = dependency.github('mapbox/earcut.hpp', 'master')
+sokol = dependency.github('luigi-rosso/sokol', 'cfedffa4e79383512c8da23608260c20545bba8f')
+libtess2 = dependency.github('memononen/libtess2', '9a450cc9e5b4b79c36b89648f8b92fe65b6dd407')
+earcut = dependency.github('mapbox/earcut.hpp', 'f36ced7e50254738c4e5af1a239f5fb7b1094007')
 
 rive = '../'
 
