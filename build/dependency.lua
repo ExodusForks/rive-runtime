@@ -24,7 +24,7 @@ function m.github(project, tag)
         print('Fetching dependency ' .. project .. ' at tag ' .. tag .. '...')
         local gitcmd = 'git -c advice.detachedHead=false -C '
             .. dependencies
-            .. ' clone --depth 1 --branch '
+            .. ' clone --depth 1 --revision '
             .. tag
             .. ' https://github.com/'
             .. project
